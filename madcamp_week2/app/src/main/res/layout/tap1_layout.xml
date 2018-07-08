@@ -7,27 +7,31 @@
 
     <Button
         android:id="@+id/act1_tap1_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="123dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="tap1" />
+
+        android:text="contact"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/act1_tap2_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="123dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="tap2" />
+        android:text="gallery"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/act1_tap3_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="123dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:text="tap3" />
+        android:text="facebook"
+        android:textColor="#ffffff" />
 
     <ListView
         android:id="@+id/listView"

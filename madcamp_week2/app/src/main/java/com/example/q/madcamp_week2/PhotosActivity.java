@@ -33,7 +33,7 @@ public class PhotosActivity extends AppCompatActivity {
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {//add actions when you touch the image
 
                 View dialogView = (View) View.inflate(PhotosActivity.this, R.layout.dialog, null);
 
