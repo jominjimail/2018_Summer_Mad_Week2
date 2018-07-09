@@ -7,5 +7,11 @@
     <ImageView
         android:id="@+id/ivPoster"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="517dp" />
+
+    <Button
+        android:id="@+id/upload_btn"
+        android:layout_width="213dp"
+        android:layout_height="wrap_content"
+        android:text="UploadYourPhoto!" />
 </LinearLayout>

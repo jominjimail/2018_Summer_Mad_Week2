@@ -1,15 +1,28 @@
 package com.example.q.madcamp_week2;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 
@@ -18,18 +31,21 @@ import java.io.File;
  */
 
 public class PhotosActivity extends AppCompatActivity {
+    private static final int GALLERY_MODE = 10;
     int int_position;
     private GridView gridView;
     GridViewAdapter adapter;
+    private FirebaseStorage storage;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_gallery);
-        gridView = (GridView)findViewById(R.id.gv_folder);
+        gridView = (GridView) findViewById(R.id.gv_folder);
+
         int_position = getIntent().getIntExtra("value", 0);
-        adapter = new GridViewAdapter(this,MainActivity.al_images,int_position);
+        adapter = new GridViewAdapter(this, MainActivity.al_images, int_position);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,4 +82,5 @@ public class PhotosActivity extends AppCompatActivity {
             }
         });
     }
+
 }
