@@ -75,10 +75,9 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+        android:layout_width="367dp"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/act1_tap1_btn"
-        android:layout_below="@+id/imageView1"
-        android:text="TextView" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView1" />
 
 </RelativeLayout>
