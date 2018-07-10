@@ -8,51 +8,77 @@
 
     <Button
         android:id="@+id/act1_tap1_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="102dp"
         android:layout_height="wrap_content"
+
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="tap1" />
+        android:text="contact"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/act1_tap2_btn"
-        android:layout_width="wrap_content"
+
+        android:layout_width="123dp"
         android:layout_height="wrap_content"
+
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="tap2" />
+        android:layout_toEndOf="@+id/act1_tap1_btn"
+        android:text="gallery"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/act1_tap3_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="123dp"
+
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:text="tap3" />
+        android:text="drawing"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/open_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="242dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="108dp"
-        android:layout_marginStart="39dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="145dp"
         android:text="UploadPhoto" />
 
     <Button
         android:id="@+id/download_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="251dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/open_btn"
-        android:layout_marginEnd="33dp"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="49dp"
         android:text="showphoto" />
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="206dp"
-        android:layout_height="167dp"
-        android:layout_centerInParent="true" />
+        android:layout_width="262dp"
+        android:layout_height="213dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="121dp" />
+
+    <EditText
+        android:id="@+id/file_name"
+        android:layout_width="245dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/open_btn"
+        android:layout_below="@+id/open_btn"
+        android:layout_marginTop="-145dp"
+        android:hint="enter the file name" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/act1_tap1_btn"
+        android:layout_below="@+id/imageView1"
+        android:text="TextView" />
 
 </RelativeLayout>

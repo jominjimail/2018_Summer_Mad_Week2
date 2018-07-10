@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,12 +36,18 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class tap1Activity extends AppCompatActivity {
     ListView listView;
     TextView textView;
     ImageView imageview;
+    EditText file_path;
+    String str_filepath;
+    TextView file_path_name;
+    Uri file;
 
     private static final int GALLERY_MODE = 10;
     private static final int DOWNLOAD_FILE = 20;
@@ -66,6 +74,9 @@ public class tap1Activity extends AppCompatActivity {
         Button open_btn = (Button) findViewById(R.id.open_btn);
         Button down_btn = (Button) findViewById(R.id.download_btn);
         imageview = (ImageView) findViewById(R.id.imageView1);
+        file_path = findViewById(R.id.file_name);
+
+        file_path_name = findViewById(R.id.textView3);
 
         open_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,10 +93,13 @@ public class tap1Activity extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageReference = storage.getReferenceFromUrl("gs://madcampweek2-fada2.appspot.com");
+                str_filepath = file_path.getText().toString();
 
 
                 //다운로드할 파일을 가르키는 참조 만들기
-                StorageReference pathReference = storageReference.child("images/1525015328030.png");
+                StorageReference pathReference = storageReference.child("images/" + str_filepath);
+
+
 
                 //Url을 다운받기
                 pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -112,6 +126,32 @@ public class tap1Activity extends AppCompatActivity {
                             String filePath = localFile.getPath();
                             Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                             imageview.setImageBitmap(bitmap);
+                            /*
+
+                            try{
+
+                                FileOutputStream fos = openFileOutput("/storage/emulated/0/madcamp/test.jpg",0);
+                                bitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
+
+                            }catch(Exception e){Toast.makeText(getApplicationContext(),"file error",Toast.LENGTH_SHORT).show();}
+                            */
+                            FileOutputStream out = null;
+
+
+                            try {
+
+                                out = new FileOutputStream(Environment.getExternalStorageDirectory().getPath() + "/madcamp/" + str_filepath);
+
+
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
+                            } catch (FileNotFoundException e)
+
+                            {
+
+                                e.printStackTrace();
+
+                            }
 
 
                         }
@@ -158,7 +198,7 @@ public class tap1Activity extends AppCompatActivity {
 
             StorageReference storageRef = storage.getReference();
 
-            Uri file = Uri.fromFile(new File(getPath(data.getData())));
+            file = Uri.fromFile(new File(getPath(data.getData())));
             StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
             UploadTask uploadTask = riversRef.putFile(file);
 
@@ -167,6 +207,8 @@ public class tap1Activity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     // Handle unsuccessful uploads
+
+
                     Toast.makeText(getApplicationContext(), "업로드에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -174,6 +216,8 @@ public class tap1Activity extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                     // ...
+                    imageview.setImageURI(file);
+                    file_path_name.setText(file.getLastPathSegment());
                     Toast.makeText(getApplicationContext(), "업로드에 성공했습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
