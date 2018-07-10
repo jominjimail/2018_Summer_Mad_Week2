@@ -53,7 +53,7 @@ public class tap1Activity extends AppCompatActivity {
 
         //권한 주는 과정
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
 
 
@@ -64,8 +64,8 @@ public class tap1Activity extends AppCompatActivity {
         Button tap2 = (Button) findViewById(R.id.act1_tap2_btn);
         Button tap3 = (Button) findViewById(R.id.act1_tap3_btn);
         Button open_btn = (Button) findViewById(R.id.open_btn);
-        Button down_btn = (Button)findViewById(R.id.download_btn);
-        imageview = (ImageView)findViewById(R.id.imageView1) ;
+        Button down_btn = (Button) findViewById(R.id.download_btn);
+        imageview = (ImageView) findViewById(R.id.imageView1);
 
         open_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,15 +77,11 @@ public class tap1Activity extends AppCompatActivity {
         });
 
 
-
         down_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageReference = storage.getReferenceFromUrl("gs://madcampweek2-fada2.appspot.com");
-
-
-
 
 
                 //다운로드할 파일을 가르키는 참조 만들기
@@ -95,7 +91,7 @@ public class tap1Activity extends AppCompatActivity {
                 pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Toast.makeText(getApplicationContext(), "다운로드 성공 : "+ uri, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "다운로드 성공 : " + uri, Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -108,7 +104,7 @@ public class tap1Activity extends AppCompatActivity {
 
                 //휴대폰 로컬 영역에 저장하기
                 try {
-                    final File localFile = File.createTempFile("images", "jpg" );
+                    final File localFile = File.createTempFile("images", "jpg");
                     pathReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
@@ -118,7 +114,6 @@ public class tap1Activity extends AppCompatActivity {
                             imageview.setImageBitmap(bitmap);
 
 
-
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -126,22 +121,14 @@ public class tap1Activity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "파일 저장 실패", Toast.LENGTH_SHORT).show();
                         }
                     });
-                } catch (IOException e) { Toast.makeText(getApplicationContext(), "예외가 발생했다 씨!!!!", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    Toast.makeText(getApplicationContext(), "예외가 발생했다 씨!!!!", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
 
 
-
-
-
-
-
-
             }
         });
-
-
-
 
 
         tap2.setOnClickListener(new View.OnClickListener() {
