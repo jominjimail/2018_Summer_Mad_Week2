@@ -1,39 +1,147 @@
 package com.example.q.madcamp_week2;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import static android.Manifest.permission.READ_CONTACTS;
 
 public class MainActivity extends AppCompatActivity {
     public static ArrayList<Model_images> al_images = new ArrayList<>();
     boolean boolean_folder;
-    Adapter_PhotosFolder obj_adapter;
-    GridView gv_folder;
-    private static final int REQUEST_PERMISSIONS = 100;
 
+    private FirebaseStorage storage;
+    private Button button;
+    private FirebaseDatabase database;
+    private EditText editText ,editText2;
+    public String name , phone;
+    private ChildEventListener mChild;
+    private DatabaseReference mDatabase;
+    private ListView listView;
+    private ArrayAdapter<String> adapter;
+    private List<User> users = new ArrayList<>();
+    private List<String> uidLists = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_gallery);
+
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference();
+
         Button tap1 = (Button) findViewById(R.id.act2_tap1_btn);
         Button tap2 = (Button) findViewById(R.id.act2_tap2_btn);
         Button tap3 = (Button) findViewById(R.id.act2_tap3_btn);
 
+        Button button1 = (Button)findViewById(R.id.upload);
+        Button button2= (Button)findViewById(R.id.board);
+        Button button3 = (Button)findViewById(R.id.sync);
+        listView = (ListView)findViewById(R.id.listview);
+
+        final ArrayList<Person> m_orders= new ArrayList<>();
+
+        /*권한*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String [] {READ_CONTACTS},0);
+        }
+
+        Map<String, String> phone_address = ContactUtil.getAddressBook(this);
+
+        Iterator ite = phone_address.keySet().iterator();
+
+        while(ite.hasNext())
+        {
+            phone = ite.next().toString();
+            name = phone_address.get(phone).toString();
+            m_orders.add(new Person(name, phone));
+        }
+
+        /*listview처리*/
+        final PersonAdapter m_adapter = new PersonAdapter(this, R.layout.view_friend_list, m_orders);
+        listView.setAdapter(m_adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long rowID)
+            {
+                doSelectFriend((Person)parent.getItemAtPosition(position));
+            }});
+
+
+        /* 백업하기 버튼 DB push */
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                for(int i=0;i<m_orders.size();i++){
+                    //System.out.println(m_orders.get(i).Number);
+                    name=m_orders.get(i).Name;
+                    phone=m_orders.get(i).Number;
+                    User user = new User(name,phone);
+                    mDatabase.child("message8").push().setValue(user);
+                }
+
+
+            }
+        });
+
+        /*실시간 DB board 보여줌*/
+        button2.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),Board.class);
+                //intent.putExtra("text",String.valueOf(editText.getText()));
+                startActivity(intent);
+            }
+        });
+
+        /*내장 핸드폰 연락처 DB 업데이트 동기화*/
+        button3.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                database.getReference().child("message8").removeValue();
+                for(int i=0;i<m_orders.size();i++){
+                    //System.out.println(m_orders.get(i).Number);
+                    name=m_orders.get(i).Name;
+                    phone=m_orders.get(i).Number;
+                    User user = new User(name,phone);
+                    mDatabase.child("message8").push().setValue(user);
+                }
+
+            }
+        });
 
 
 
@@ -60,105 +168,78 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        gv_folder = (GridView)findViewById(R.id.gv_folder);
-
-        gv_folder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), PhotosActivity.class);
-                intent.putExtra("value",i);
-                startActivity(intent);
-            }
-        });
-
-
-        if ((ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) && (ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
-            if ((ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) && (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE))) {
-
-            } else {
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                        REQUEST_PERMISSIONS);
-            }
-        }else {
-            Log.e("Else","Else");
-            fn_imagespath();
-        }
 
 
 
+    }//onCreate
+
+    private void writeNewUser(String userId, String name, String email) {
+        User user = new User(name, email);
+
+        mDatabase.child("users").child(userId).setValue(user);
     }
 
-    public ArrayList<Model_images> fn_imagespath() {
-        al_images.clear();
+    public void doSelectFriend(Person p)
+    {
+        Log.e("####", p.getName() + ", " + p.getNumber());
+    }
 
-        int int_position = 0;
-        Uri uri;
-        Cursor cursor;
-        int column_index_data, column_index_folder_name;
+    private class PersonAdapter extends ArrayAdapter<Person>
+    {
+        private ArrayList<Person> items;
 
-        String absolutePathOfImage = null;
-        uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-
-        String[] projection = {MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
-
-        final String orderBy = MediaStore.Images.Media.DATE_TAKEN;
-        cursor = getApplicationContext().getContentResolver().query(uri, projection, null, null, orderBy + " DESC");
-
-        column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-        column_index_folder_name = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
-        while (cursor.moveToNext()) {
-            absolutePathOfImage = cursor.getString(column_index_data);
-            Log.e("Column", absolutePathOfImage);
-            Log.e("Folder", cursor.getString(column_index_folder_name));
-
-            for (int i = 0; i < al_images.size(); i++) {
-                if (al_images.get(i).getStr_folder().equals(cursor.getString(column_index_folder_name))) {
-                    boolean_folder = true;
-                    int_position = i;
-                    break;
-                } else {
-                    boolean_folder = false;
+        public PersonAdapter(Context context, int textViewResourceId, ArrayList<Person> items)
+        {
+            super(context, textViewResourceId, items);
+            this.items = items;
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            View v = convertView;
+            if (v == null)
+            {
+                LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = vi.inflate(R.layout.view_friend_list, null);
+            }
+            Person p = items.get(position);
+            if (p != null)
+            {
+                TextView tt = (TextView) v.findViewById(R.id.name);
+                TextView bt = (TextView) v.findViewById(R.id.msg);
+                if (tt != null)
+                {
+                    tt.setText(p.getName());
+                }
+                if(bt != null)
+                {
+                    bt.setText("전화번호: "+ p.getNumber());
                 }
             }
+            return v;
+        }
+    }
 
+    class Person
+    {
+        private String Name;
+        private String Number;
 
-            if (boolean_folder) {
-
-                ArrayList<String> al_path = new ArrayList<>();
-                al_path.addAll(al_images.get(int_position).getAl_imagepath());
-                al_path.add(absolutePathOfImage);
-                al_images.get(int_position).setAl_imagepath(al_path);
-
-            } else {
-                ArrayList<String> al_path = new ArrayList<>();
-                al_path.add(absolutePathOfImage);
-                Model_images obj_model = new Model_images();
-                obj_model.setStr_folder(cursor.getString(column_index_folder_name));
-                obj_model.setAl_imagepath(al_path);
-
-                al_images.add(obj_model);
-
-
-            }
-
-
+        public Person(String _Name, String _Number)
+        {
+            this.Name = _Name;
+            this.Number = _Number;
         }
 
-
-        for (int i = 0; i < al_images.size(); i++) {
-            Log.e("FOLDER", al_images.get(i).getStr_folder());
-            for (int j = 0; j < al_images.get(i).getAl_imagepath().size(); j++) {
-                Log.e("FILE", al_images.get(i).getAl_imagepath().get(j));
-            }
+        public String getName()
+        {
+            return Name;
         }
-        obj_adapter = new Adapter_PhotosFolder(getApplicationContext(),al_images);
-        gv_folder.setAdapter(obj_adapter);
-        return al_images;
+
+        public String getNumber()
+        {
+            return Number;
+        }
     }
 
 
