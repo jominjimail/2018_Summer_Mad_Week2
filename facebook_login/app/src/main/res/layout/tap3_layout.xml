@@ -1,86 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/facebook_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:id="@+id/act3_tap1_btn"
-        android:layout_width="123dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="contact"
-        android:textColor="#ffffff" />
-
-    <Button
-        android:id="@+id/act3_tap2_btn"
-        android:layout_width="123dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="gallery"
-        android:textColor="#ffffff" />
-
-    <Button
-        android:id="@+id/act3_tap3_btn"
-        android:layout_width="123dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:text="drawing"
-        android:textColor="#ffffff" />
-
-    <EditText
-        android:id="@+id/master_name"
-        android:layout_width="259dp"
-        android:layout_height="48dp"
-
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="143dp"
-        android:hint="Enter user name" />
-
-    <EditText
-        android:id="@+id/repo_name"
-        android:layout_width="259dp"
-        android:layout_height="48dp"
-
-
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
-        android:hint="Enter repository name" />
-
-    <Button
-        android:id="@+id/parse_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="205dp"
-        android:text="parsing" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ScrollView>
 
     <TextView
-        android:id="@+id/textBox"
-        android:layout_width="match_parent"
-        android:layout_height="266dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/act3_tap1_btn"
-        android:text="text" />
+        android:id="@+id/textView1"
+        android:layout_width="335dp"
+        android:layout_height="298dp"
 
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="27dp"
+        android:scrollbars="vertical"
+        android:textSize="12dp"/>
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="Who commits?" />
+
+    <EditText
+        android:id="@+id/master_text"
+        android:layout_width="293dp"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="144dp"
+        android:hint="Enter repo owner" />
+
+    <EditText
+        android:id="@+id/repo_text"
+        android:layout_width="297dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/master_text"
+        android:layout_marginBottom="87dp"
+        android:hint="Enter repo name" />
 </RelativeLayout>
