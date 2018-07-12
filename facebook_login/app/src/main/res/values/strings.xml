@@ -3,6 +3,7 @@
     <string name="facebook_app_id">249818435603566</string>
 
     <string name="fb_login_protocol_scheme"> fb249818435603566 </string>
+    <string name="title_activity_first_screen">first_screen</string>
 
 
 </resources>

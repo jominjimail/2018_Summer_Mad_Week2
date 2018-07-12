@@ -61,11 +61,7 @@ public class tap3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tap3_layout);
 
-        FirebaseInstanceId.getInstance().getToken();
 
-        if (FirebaseInstanceId.getInstance().getToken() != null) {
-            Log.d(TAG, "token = " + FirebaseInstanceId.getInstance().getToken());
-        }
 
         /*
 

@@ -24,7 +24,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:text="Who commits?" />
+        android:background="@drawable/mybutton"
+        android:text="commits 수 확인하기" />
 
     <EditText
         android:id="@+id/master_text"

@@ -14,7 +14,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="contact"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:visibility="invisible"
+        android:background="@drawable/mybutton"/>
 
     <Button
         android:id="@+id/act1_tap2_btn"
@@ -25,7 +27,9 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/act1_tap1_btn"
         android:text="gallery"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:visibility="invisible"
+        android:background="@drawable/mybutton"/>
 
     <Button
         android:id="@+id/act1_tap3_btn"
@@ -35,7 +39,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:text="drawing"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:visibility="invisible"
+        android:background="@drawable/mybutton"/>
 
     <Button
         android:id="@+id/open_btn"
@@ -44,7 +50,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="145dp"
-        android:text="UploadPhoto" />
+        android:background="@drawable/mybutton"
+        android:text="사진 올리기" />
 
     <Button
         android:id="@+id/download_btn"
@@ -54,15 +61,16 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="49dp"
-        android:text="showphoto" />
+        android:background="@drawable/mybutton"
+        android:text="사진 다운받기" />
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="262dp"
-        android:layout_height="213dp"
+        android:layout_height="313dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="121dp" />
+        android:layout_marginTop="27dp" />
 
     <EditText
         android:id="@+id/file_name"
@@ -71,7 +79,7 @@
         android:layout_alignStart="@+id/open_btn"
         android:layout_below="@+id/open_btn"
         android:layout_marginTop="-145dp"
-        android:hint="enter the file name" />
+        android:hint="파일 이름을 입력해주세요" />
 
     <TextView
         android:id="@+id/textView3"

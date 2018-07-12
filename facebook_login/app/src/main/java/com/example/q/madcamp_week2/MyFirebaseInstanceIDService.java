@@ -6,13 +6,23 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
-    private static final String TAG = MyFirebaseInstanceIDService.class.getSimpleName();
+    private static final String TAG = "MyFirebase";
 
-    // 토큰 재생성
     @Override
     public void onTokenRefresh() {
         // Get updated InstanceID token.
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "token = " + token);
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "Refreshed token: " + refreshedToken);
+        System.out.println(TAG);
+
+        // If you want to send messages to this application instance or
+        // manage this apps subscriptions on the server side, send the
+        // Instance ID token to your app server.
+        sendRegistrationToServer(refreshedToken);
+    }
+
+    private void sendRegistrationToServer(String token){
+        //기타 작업으로 활용
+
     }
 }

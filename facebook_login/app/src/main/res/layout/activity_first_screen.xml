@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".first_screen">
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="150dp"
+        android:layout_height="139dp"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="107dp"
+        android:background="@drawable/mybutton"
+        android:text="전화부 백업할래?" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="150dp"
+        android:layout_height="139dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/button1"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/mybutton"
+        android:text="갤러리 백업할래?" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="150dp"
+        android:layout_height="139dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/button1"
+        android:layout_marginBottom="143dp"
+        android:text="github commit 볼래?"
+        android:background="@drawable/mybutton"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="150dp"
+        android:layout_height="139dp"
+        android:layout_alignStart="@+id/button2"
+        android:layout_alignTop="@+id/button3"
+        android:text="채팅 할래?"
+        android:background="@drawable/mybutton"/>
+</RelativeLayout>
