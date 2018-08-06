@@ -1,5 +1,7 @@
 ## week2
 
+### android studio with firebase
+
 ### 프로젝트 이름: 파베쨩
 
 ### 팀원 이름: 조민지 김경모
